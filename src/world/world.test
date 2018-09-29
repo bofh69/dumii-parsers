@@ -1,0 +1,14 @@
+1234 THINGS     ; number of standard things in the world files
+ 234 MONSTERS   ; number of standard monsters in the world files
+ 345 CREATABLE  ; number of monsters you can create in the game
+  13 ZONES      ; how many world/zones that follow
+  ZONE 01:  24 ROOMS "first"
+  ZONE 02:  53 ROOMS "second" Unaligned Kaladrin
+  ZONE 03:  63 ROOMS "third" Good
+  ZONE 10:  54 ROOMS "forth" EVIL Zimkar
+  ZONE 11:  18 ROOMS "five" Neutral
+  ZONE 12:  38 ROOMS "six and space" Unaligned Exile UID 75
+FILES:          ; the files that contain the world data
+world/types
+world/misc
+world/zone001

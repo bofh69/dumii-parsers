@@ -1,0 +1,76 @@
+// Basic tokens:
+digit = _{ '0'..'9' }
+alpha = _{ 'a'..'z' | 'A'..'Z' }
+eol = _{ "\r\n" | "\n" }
+ws = _{ " " | "\t" }
+
+num = { digit+ }
+
+// Whitespace or comment until the end of line:
+to_eol = _{ ws* ~ (eol | comment_to_eol) }
+any_to_eol = _{ eol | (any ~ any_to_eol) }
+comment_to_eol = _{ ";" ~ any_to_eol }
+
+empty_lines = _{ ( eol | ( "#" ~ any_to_eol ) )* }
+
+THINGS = { ws* ~ num ~ ws+ ~ "THING" ~ "S"? ~ to_eol }
+MONSTERS = { ws* ~ num ~ ws+ ~ "MONSTER" ~ "S"? ~ to_eol }
+CREATABLES = { ws* ~ num ~ ws+ ~ "CREATABLE" ~ "S"? ~ to_eol }
+ZONES = { ws* ~ num ~ ws+ ~ "ZONE" ~ "S"? ~ to_eol }
+
+zone_part = _{
+  ws* ~ "ZONE" ~ ws+
+}
+zone_sep = _{
+  ":" ~ ws+
+}
+
+room_part = _{
+  ws+ ~ "ROOM" ~ "S"? ~ ws+
+}
+
+string = {
+  !("\"") ~ any ~ string?
+}
+
+not_empty_string = _{
+   "\"" ~ string ~ "\""
+}
+
+align = {
+    "Unaligned" |
+    "Good" |
+    "Neutral" |
+    ^"Evil"
+}
+
+ident = {
+    alpha+
+}
+
+zone_defs = {
+  zone_part ~ num ~
+  zone_sep ~ num ~
+  room_part ~ not_empty_string ~
+  (ws+ ~ align ~ (ws+ ~ ident ~ (ws+ ~ "UID" ~ ws+ ~ num )? )?)? ~
+  ws* ~ eol
+}
+
+file = {
+  !("\r" | "\n") ~ any ~ file?
+}
+
+files = {
+    file ~ eol
+}
+
+world = {
+    empty_lines? ~
+    THINGS ~ empty_lines
+    ~ MONSTERS ~ empty_lines
+    ~ CREATABLES ~ empty_lines
+    ~ ZONES ~ empty_lines
+    ~ zone_defs+
+    ~ "FILES:" ~ to_eol
+    ~ files*
+}
