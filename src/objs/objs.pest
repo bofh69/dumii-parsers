@@ -1,0 +1,24 @@
+digit = _{ '0'..'9' }
+num = { digit+ }
+alpha = _{ 'a'..'z' | 'A'..'Z' }
+ident = { (digit | alpha)+ }
+eol = _{ "\r\n" | "\n" }
+esc_eol = _{ "\\" ~ eol }
+ws = _{ " " | "\t" }
+
+typ = _{ ident ~ ":" ~ ws* ~ ident ~ eol }
+
+call_ = _{
+    &eol |
+    ( esc_eol ~ call_ ) |
+    ( !(eol) ~ any ~ call_ ) 
+}
+call = {
+    call_ 
+}
+code = { "@" ~ ident }
+catch = { code ~ ws+ ~ call ~ eol}
+
+typedef = { typ ~ catch* ~ "*" ~ eol }
+
+defs = _{ typedef+ }
