@@ -8,7 +8,7 @@ num = { digit+ }
 
 // Whitespace or comment until the end of line:
 to_eol = _{ ws* ~ (eol | comment_to_eol) }
-any_to_eol = _{ eol | (any ~ any_to_eol) }
+any_to_eol = _{ eol | (ANY ~ any_to_eol) }
 comment_to_eol = _{ ";" ~ any_to_eol }
 
 empty_lines = _{ ( eol | ( "#" ~ any_to_eol ) )* }
@@ -30,7 +30,7 @@ room_part = _{
 }
 
 string = {
-  !("\"") ~ any ~ string?
+  !("\"") ~ ANY ~ string?
 }
 
 not_empty_string = _{
@@ -57,7 +57,7 @@ zone_defs = {
 }
 
 file = {
-  !("\r" | "\n") ~ any ~ file?
+  !("\r" | "\n") ~ ANY ~ file?
 }
 
 files = {
