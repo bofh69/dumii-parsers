@@ -5,7 +5,7 @@ mod internal {
 
     // Included to trigger a rebuild when the file is changed:
     #[cfg(debug_assertions)]
-    const _WORLD_GRAMMAR: &'static str = include_str!("world.pest");
+    const _WORLD_GRAMMAR: &str = include_str!("world.pest");
 
     #[derive(Parser)]
     #[grammar = "world/world.pest"]
