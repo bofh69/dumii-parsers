@@ -2,7 +2,7 @@
 name = "dumii-parsers"
 version = "0.1.0"
 authors = ["Sebastian Andersson <sebastian@bittr.nu>"]
-# edition = "2018"
+edition = "2018"
 
 [dependencies]
 pest = "^2.0"
