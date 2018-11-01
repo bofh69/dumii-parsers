@@ -148,10 +148,10 @@ mod tests {
 
     #[test]
     fn parse_world() {
-        use world::Alignment;
+        use crate::world::Alignment;
 
         let world = include_str!("world.test");
-        let result = ::world::parse(world);
+        let result = crate::world::parse(world);
         assert!(result.is_ok(), "Not correct parse result: {:?}", result);
         let result = result.unwrap();
         assert_eq!(result.n_things, 1234);
