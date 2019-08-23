@@ -20,7 +20,7 @@ impl error::Error for ParseError {
         "invalid world file"
     }
 
-    fn cause(&self) -> Option<&error::Error> {
+    fn cause(&self) -> Option<&dyn error::Error> {
         None
     }
 }
